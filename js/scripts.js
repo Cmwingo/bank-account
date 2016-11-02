@@ -11,15 +11,17 @@ function BankAccount(userName, accountType, balance) {
   } else if(accountType === "savings"){
     this.interestRate = savingsInterest;
   };
-  this.accountHistory = ["+" + balance];
+  this.accountHistory = [balance];
 };
 
 BankAccount.prototype.deposit = function(amount) {
   this.balance += parseFloat(amount);
+  this.accountHistory.push(amount);
 };
 
 BankAccount.prototype.withdraw = function(amount) {
   this.balance -= parseFloat(amount);
+  newAccount.accountHistory.push(-amount);
 };
 
 BankAccount.prototype.compound = function(months) {
@@ -47,19 +49,17 @@ $(document).ready(function(){
     var withdrawal = $("input#withdrawal").val();
     if (deposit != "") {
       newAccount.deposit(deposit);
-      newAccount.accountHistory.push("+" + deposit);
       console.log(newAccount.accountHistory);
     }
     if (withdrawal != "") {
       newAccount.withdraw(withdrawal);
-      newAccount.accountHistory.push("-" + withdrawal);
       console.log(newAccount.accountHistory);
     }
     $('#balance').text(newAccount.balance.toLocaleString('en-US', { style: 'currency', currency: 'USD' }));
 
 
     for (i = 0; i < newAccount.accountHistory.length; i++ ) {
-         $('ul').prepend('<li>'  + newAccount.accountHistory[i] + '</li>');
+         $('ul').prepend('<li>'  + Number(newAccount.accountHistory[i]).toLocaleString('en-US', { style: 'currency', currency: 'USD' }) + '</li>');
      }
 
     $("input#deposit").val("");
