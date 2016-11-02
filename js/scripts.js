@@ -6,9 +6,9 @@ function BankAccount(userName, accountType, balance) {
   this.userName = userName;
   this.accountType = accountType;
   this.balance = parseFloat(balance);
-  if(accountType === "checking"){
+  if(accountType === "Checking"){
     this.interestRate = checkingInterest;
-  } else if(accountType === "savings"){
+  } else if(accountType === "Savings"){
     this.interestRate = savingsInterest;
   };
   this.accountHistory = [balance];
@@ -40,7 +40,7 @@ $(document).ready(function(){
     var accountType = $("#account-type").val();
     newAccount = new BankAccount(name, accountType, initialDeposit);
     $('#balance').text(newAccount.balance.toLocaleString('en-US', { style: 'currency', currency: 'USD' }));
-    $('#account-id').text(newAccount.userName + " " + newAccount.accountType);
+    $('#account-id').text(newAccount.userName + "'s " + newAccount.accountType + " Account");
   });
   $("form#deposit-withdrawal").submit(function(event){
     event.preventDefault();
@@ -70,5 +70,7 @@ $(document).ready(function(){
     $('#projected').show();
     var months = $("input#months").val();
     $('#projected').text(newAccount.compound(months).toLocaleString('en-US', { style: 'currency', currency: 'USD' }));
+    $('#projected-balance').text("Your projected balance in " + months + " months at a rate of " + newAccount.interestRate * 100 + "%");
+
   });
 });
